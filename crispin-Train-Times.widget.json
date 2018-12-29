@@ -1,0 +1,42 @@
+{
+    "template": "<style>\n  div.left-column {\n  \ttext-align: right; \n  \tmargin-left: 5px;\n  }\n  div.right-column {\n\t\ttext-align: left;\n  \tmargin-left: 25px;  \n  }\n  \n  div.train-times {\n  \tfont-size: 18px;\n  \twhite-space: nowrap;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n\n  span.train-status-delayed {\n  \tfont-size: 18px;\n  \twhite-space: nowrap;\n  \tcolor:red;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n  span.train-status-OK {\n  \tfont-size: 18px;\n  \twhite-space: nowrap;\n  \tcolor:green;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n\thr.train-divider { \n  \tborder: 0; \n  \theight: 1px; \n  \tbackground-image: -webkit-linear-gradient(left, #212124, #666666, #FFFFFF, #666666, #212124);\n\t}\n</style>\n\n<div class=\"row\" ng-repeat=\"item in itemsInGroup(config.TrainGroup)\">\n  <div class=\"col col-sm-2 left-column\">\n    <div class=\"row event-day\">\n      <span ng-class=\"itemValue(item.name + 'Status') != 'ON TIME' ? 'train-status-delayed':'train-status-OK'\" >{{itemValue(item.name + \"Status\")}}</span>\n    </div>\n  </div>\n  <div class=\"col col-sm-8 right-column\">\n    <div class=\"row train-times\">\n      <span ng-if=\"(itemValue(item.name + 'Status') != '--')\" >\n        <span ng-if=\"(config.trainDisplayScheduled)\">Scheduled: {{itemValue(item.name + \"TimeAimed\")  | date:'HH:mm' }} </span>\n        <span ng-if=\"(config.trainDisplayScheduled && (config.trainDisplayExpected || config.trainDisplayUntil))\">-</span> \n        <span ng-if=\"(config.trainDisplayExpected)\">Expected: {{itemValue(item.name + \"TimeExpected\")  | date:'HH:mm' }} </span>\n        <span ng-if=\"(config.trainDisplayExpected && config.trainDisplayUntil)\">-</span>\n        <span ng-if=\"(config.trainDisplayUntil)\">{{itemValue(item.name + \"Until\") }}</span>\n      </span>\n    </div>\n  </div> \n<!--  <div>\n    <hr class=\"train-divider\">\n  </div>\n-->\n </div>\n\n",
+    "name": "Train Times",
+    "settings": [
+        {
+            "type": "heading",
+            "id": "GlobalSettings",
+            "label": "Global settings"
+        },
+        {
+            "type": "item",
+            "id": "TrainGroup",
+            "label": "Train Group",
+            "description": "Group containing the train items"
+        },
+        {
+            "type": "checkbox",
+            "id": "trainDisplayExpected",
+            "label": "Display Expected Time",
+            "default": true,
+            "description": "Display the expected time of arrival"
+        },
+        {
+            "type": "checkbox",
+            "id": "trainDisplayScheduled",
+            "label": "Display Scheduled Time",
+            "default": true,
+            "description": "Display the scheduled time of arrival"
+        },
+        {
+            "type": "checkbox",
+            "id": "trainDisplayUntil",
+            "label": "Display Minutes Until Arrival",
+            "default": true,
+            "description": "Display the minutes until the scheduled arrival"
+        }
+    ],
+    "author": "Crispin",
+    "source_url": "https://raw.githubusercontent.com/davorf/calendar-five-events/master/calendar-five-events.widget.json",
+    "readme_url": "https://github.com/davorf/calendar-five-events",
+    "description": "Displays train times. Used in conjunction with my train rules / binding"
+}
