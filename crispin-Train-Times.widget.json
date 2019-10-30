@@ -1,87 +1,54 @@
-<style>
-  div.station {
-  	text-align: left; 
-  	margin-left: 5px;
-  }
-  div.heading{
-  	/*width:200px;*/
-  	border:solid 0px red;
-  }
-  div.left-column {
-  	text-align: right; 
-  	margin-left: 5px;
-  }
-  div.right-column {
-		text-align: left;
-  	margin-left: 25px;  
-  }
-  
-  div.train-times {
-  	/*font-size: 18px;*/
-  	white-space: nowrap;
-  	overflow: hidden; 
-  	text-overflow: ellipsis;
-  }
-
-  span.train-status-delayed {
-  	/*font-size: 18px;*/
-  	white-space: nowrap;
-  	color:red;
-  	overflow: hidden; 
-  	text-overflow: ellipsis;
-  }
-  span.train-status-OK {
-  	/*font-size: 18px;*/
-  	white-space: nowrap;
-  	color:green;
-  	overflow: hidden; 
-  	text-overflow: ellipsis;
-  }
-	hr.train-divider { 
-  	border: 0; 
-  	height: 1px; 
-  	background-image: -webkit-linear-gradient(left, #212124, #666666, #FFFFFF, #666666, #212124);
-	}
-  
-  button.btnRefresh{
-  	float:right;
-  	margin-right:20px;
-		background-color: Transparent;
-  	border:solid 0px blue;
-  }
-</style>
-<div class="row station">
-    <button  ng-if="(itemValue(item.itemShowRefresh))" type="button" class="btn btn-default btn-lg btnRefresh" title="Refresh" ng-click="sendCmd(config.itemRefresh, 'ON')">
-          <i class="glyphicon glyphicon-refresh"></i>
-    </button>  
-	<div class="col col-sm-5">
-    <div class="row heading">
-      <span> {{itemValue(config.itemHeading)}}</span>
-    </div>
-  </div>
-</div>
-<div class="row" ng-repeat="item in itemsInGroup(config.TrainGroup) | orderBy:'+name'">
-  <div class="col col-sm-2 left-column">
-    <div class="row event-day">
-      <span ng-class="itemValue(item.name + 'Status') != 'ON TIME' ? 'train-status-delayed':'train-status-OK'" >{{itemValue(item.name + "Status")}}</span>
-    </div>
-  </div>
-  <div class="col col-sm-8 right-column">
-    <div class="row train-times">
-      <span ng-if="(itemValue(item.name + 'Status') != '--' && itemValue(item.name + 'Status') != 'ERROR')" >
-        <span ng-if="((config.trainDisplayExpected || config.trainDisplayUntil))">-</span> 
-        <span ng-if="(config.trainDisplayExpected)">Departs: {{itemValue(item.name + "TimeExpected")  | date:'HH:mm' }} </span>
-        <span ng-if="(config.trainDisplayExpected && config.trainDisplayUntil)">-</span>
-        <span ng-if="(config.trainDisplayUntil)">(in {{itemValue(item.name + "Until") }} minutes)</span>
-      </span>
-      <span ng-if="(itemValue(item.name + 'Status') == 'ERROR')" >
-        Unknown error while getting information.
-      </span>        
-     </div>
-  </div> 
-<!--  <div>
-    <hr class="train-divider">
-  </div>
--->
- </div>
-
+{
+    "template": "<style>\n  div.station {\n  \ttext-align: left; \n  \tmargin-left: 5px;\n  }\n  div.heading{\n  \t/*width:200px;*/\n  \tborder:solid 0px red;\n  }\n  div.left-column {\n  \ttext-align: right; \n  \tmargin-left: 5px;\n  }\n  div.right-column {\n\t\ttext-align: left;\n  \tmargin-left: 25px;  \n  }\n  \n  div.train-times {\n  \t/*font-size: 18px;*/\n  \twhite-space: nowrap;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n\n  span.train-status-delayed {\n  \t/*font-size: 18px;*/\n  \twhite-space: nowrap;\n  \tcolor:red;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n  span.train-status-OK {\n  \t/*font-size: 18px;*/\n  \twhite-space: nowrap;\n  \tcolor:green;\n  \toverflow: hidden; \n  \ttext-overflow: ellipsis;\n  }\n\thr.train-divider { \n  \tborder: 0; \n  \theight: 1px; \n  \tbackground-image: -webkit-linear-gradient(left, #212124, #666666, #FFFFFF, #666666, #212124);\n\t}\n  \n  button.btnRefresh{\n  \tfloat:right;\n  \tmargin-right:20px;\n\t\tbackground-color: Transparent;\n  \tborder:solid 0px blue;\n  }\n</style>\n<div class=\"row station\">\n    <button  ng-if=\"(itemValue(item.itemShowRefresh))\" type=\"button\" class=\"btn btn-default btn-lg btnRefresh\" title=\"Refresh\" ng-click=\"sendCmd(config.itemRefresh, 'ON')\">\n          <i class=\"glyphicon glyphicon-refresh\"></i>\n    </button>  \n\t<div class=\"col col-sm-5\">\n    <div class=\"row heading\">\n      <span> {{itemValue(config.itemHeading)}}</span>\n    </div>\n  </div>\n</div>\n<div class=\"row\" ng-repeat=\"item in itemsInGroup(config.TrainGroup) | orderBy:'+name'\">\n  <div class=\"col col-sm-2 left-column\">\n    <div class=\"row event-day\">\n      <span ng-class=\"itemValue(item.name + 'Status') != 'ON TIME' ? 'train-status-delayed':'train-status-OK'\" >{{itemValue(item.name + \"Status\")}}</span>\n    </div>\n  </div>\n  <div class=\"col col-sm-8 right-column\">\n    <div class=\"row train-times\">\n      <span ng-if=\"(itemValue(item.name + 'Status') != '--' && itemValue(item.name + 'Status') != 'ERROR')\" >\n        <span ng-if=\"((config.trainDisplayExpected || config.trainDisplayUntil))\">-</span> \n        <span ng-if=\"(config.trainDisplayExpected)\">Departs: {{itemValue(item.name + \"TimeExpected\")  | date:'HH:mm' }} </span>\n        <span ng-if=\"(config.trainDisplayExpected && config.trainDisplayUntil)\">-</span>\n        <span ng-if=\"(config.trainDisplayUntil)\">(in {{itemValue(item.name + \"Until\") }} minutes)</span>\n      </span>\n      <span ng-if=\"(itemValue(item.name + 'Status') == 'ERROR')\" >\n        Unknown error while getting information.\n      </span>        \n     </div>\n  </div> \n<!--  <div>\n    <hr class=\"train-divider\">\n  </div>\n-->\n </div>\n\n",
+    "name": "Train Times",
+    "settings": [
+        {
+            "type": "heading",
+            "id": "GlobalSettings",
+            "label": "Global settings"
+        },
+        {
+            "type": "item",
+            "id": "TrainGroup",
+            "label": "Train Group",
+            "description": "Group containing the train items"
+        },
+        {
+            "type": "checkbox",
+            "id": "trainDisplayExpected",
+            "label": "Display Expected Time",
+            "default": true,
+            "description": "Display the expected time of arrival"
+        },
+        {
+            "type": "checkbox",
+            "id": "trainDisplayUntil",
+            "label": "Display Minutes Until Arrival",
+            "default": true,
+            "description": "Display the minutes until the scheduled arrival"
+        },
+        {
+            "type": "item",
+            "id": "itemHeading",
+            "label": "Heading Item",
+            "description": "Item which will contain the departure station"
+        },
+        {
+            "type": "item",
+            "id": "itemRefresh",
+            "label": "Refresh Switch",
+            "description": "Item which will trigger a refresh"
+        },
+        {
+            "type": "checkbox",
+            "id": "itemShowRefresh",
+            "label": "Show Refresh",
+            "default": true,
+            "description": "Show refresh button"
+        }
+    ],
+    "author": "Crispin",
+    "source_url": "https://raw.githubusercontent.com/davorf/calendar-five-events/master/calendar-five-events.widget.json",
+    "readme_url": "https://github.com/davorf/calendar-five-events",
+    "description": "Displays train times. Used in conjunction with my train rules / binding"
+}
